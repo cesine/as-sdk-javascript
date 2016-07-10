@@ -1,0 +1,25 @@
+{
+  "name": "as-sdk-javascript",
+  "version": "0.0.1",
+  "description": "Example client side sdk for authenticated systems workshop",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "istanbul cover --recursive jasmine-node .; istanbul check-coverage  --statements 100 --functions 94 --branches 86 --lines 100",
+    "lint": "jshint user/*/**.js anything/*/**.js",
+    "test": "jasmine-node .",
+    "test:browser": "open SpecRunner.html"
+  },
+  "keywords": [
+    "authentication",
+    "oauth2",
+    "jwt"
+  ],
+  "author": "cesine <cesine@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "fetch-mock": "^4.6.0",
+    "istanbul": "^0.4.4",
+    "jasmine-node": "^1.14.5",
+    "node-fetch": "^1.5.3"
+  }
+}
