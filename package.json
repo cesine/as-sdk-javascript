@@ -2,10 +2,12 @@
   "name": "as-sdk-javascript",
   "version": "0.0.1",
   "description": "Example client side sdk for authenticated systems workshop",
+  "repository": "https://github.com/cesine/as-sdk-javascript.git",
   "main": "index.js",
   "scripts": {
     "coverage": "istanbul cover --recursive jasmine-node .; istanbul check-coverage  --statements 100 --functions 94 --branches 86 --lines 100",
     "lint": "jshint user/*/**.js anything/*/**.js",
+    "postinstall": "bower install",
     "test": "jasmine-node .",
     "test:browser": "open SpecRunner.html"
   },
