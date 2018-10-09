@@ -29,7 +29,7 @@ describe('User', function() {
 
       expect(user).toBeDefined();
       expect(user.username).toEqual('anonymouse');
-      expect(user.url).toEqual('http://localhost:3000/v1/users/anonymouse');
+      expect(user.url).toEqual('https://localhost:8010/v1/users/anonymouse');
     });
   });
 
@@ -103,7 +103,7 @@ describe('User', function() {
           expect(err.status).toEqual(403);
           expect(err.statusText).toEqual('Forbidden');
           expect(err.message).toEqual('Unauthorized');
-          // expect(err.url).toEqual('http://localhost:3000/v1/users/impersonator');
+          // expect(err.url).toEqual('https://localhost:8010/v1/users/impersonator');
 
           expect(fetchMockLocal.called('impersonator_json')).toBeTruthy();
           done();
@@ -118,8 +118,10 @@ describe('User', function() {
 
     it('should render', function(done) {
       var user = new User({
-        givenName: 'Anony',
-        familyName: 'Mouse',
+        name: {
+          givenName: 'Anony',
+          familyName: 'Mouse',
+        },
         id: 'af3104b0-cb69-11e8-ba75-6f9a7b4c6ada',
         revision: '1-1539051540535',
         deletedAt: null,

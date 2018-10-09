@@ -27,7 +27,7 @@
     }
 
     get url() {
-      return 'http://localhost:3000/v1/users/' + this.username;
+      return 'https://localhost:8010/v1/users/' + this.username;
     }
 
     fetch() {
@@ -35,6 +35,44 @@
       let xhr;
 
       return global.fetch(this.url).then(function(response) {
+        xhr = response;
+        return response.json();
+      }).then(function(data) {
+        if (xhr.status >= 400) {
+          data.status = xhr.status;
+          data.statusText = xhr.statusText;
+          data.url = xhr.url;
+          throw data;
+        }
+
+        if (data) {
+          for (const attr in data) {
+            if (data.hasOwnProperty(attr)) {
+              self[attr] = data[attr];
+            }
+          }
+        }
+        return self;
+      })
+      .then(() => {
+        return self.render();
+      });
+    }
+
+    update(body) {
+      const self = this;
+      let xhr;
+
+      return global.fetch(this.url, {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            Accept: 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          redirect: 'manual',
+          body: JSON.stringify(body),
+        }).then(function(response) {
         xhr = response;
         return response.json();
       }).then(function(data) {
@@ -72,7 +110,7 @@
         return Promise.resolve(this);
       }
 
-      element.find('.displayName').html(`${this.givenName} ${this.familyName} <small>(@${this.username})</small>`);
+      element.find('.displayName').html(`${this.name && this.name.givenName || ''} ${this.name && this.name.familyName || ''} <small>(@${this.username})</small>`);
       element.find('.email').text(this.email);
       element.find('.description').text(this.description);
 
