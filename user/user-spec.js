@@ -110,4 +110,37 @@ describe('User', function() {
         });
     });
   });
+
+  describe('render', function() {
+    afterEach(function() {
+      fetchMockLocal.restore();
+    });
+
+    it('should render', function(done) {
+      var user = new User({
+        givenName: 'Anony',
+        familyName: 'Mouse',
+        id: 'af3104b0-cb69-11e8-ba75-6f9a7b4c6ada',
+        revision: '1-1539051540535',
+        deletedAt: null,
+        deletedReason: '',
+        username: 'anonymouse',
+        email: 'anony@mouse.it',
+        gravatar: 'e240ea628afa673f40019d12c10b3991',
+        description: 'A user for testing.',
+        language: '',
+        hash: '$2a$10$cD3yHU5Pzxg1BHtDIFvLLOl/fNsW/eq7LAFziCt1ClDEupAgIfohG',
+        createdAt: '2018-10-09T02:19:00.603Z',
+        updatedAt: '2018-10-09T02:19:00.603Z',
+      });
+      user.render()
+        .then(function(result) {
+          expect(result).toBe(user);
+          if (typeof document !== 'undefined' && typeof global.jQuery !== 'undefined') {
+            expect(global.jQuery('#profile').text().replace(/\W+/g, ' ')).toEqual(' Anony Mouse anonymouse Email anony mouse it Description A user for testing ');
+          }
+          done();
+        });
+    });
+  });
 });

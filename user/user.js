@@ -51,9 +51,32 @@
               self[attr] = data[attr];
             }
           }
-          return self;
         }
+        return self;
+      })
+      .then(() => {
+        return self.render();
       });
+    }
+
+    render() {
+      if (typeof document === 'undefined') {
+        return Promise.resolve(this);
+      }
+      if (typeof global.jQuery !== 'function') {
+        return Promise.resolve(this);
+      }
+
+      const element = global.jQuery('#profile');
+      if (!element) {
+        return Promise.resolve(this);
+      }
+
+      element.find('.displayName').html(`${this.givenName} ${this.familyName} <small>(@${this.username})</small>`);
+      element.find('.email').text(this.email);
+      element.find('.description').text(this.description);
+
+      return Promise.resolve(this);
     }
   }
 
